@@ -1,64 +1,53 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: './src/index.js', // Путь к вашему основному JS-файлу
-    output: {
-        filename: 'main.js', // Имя файла, куда будет собран JS
-        path: path.resolve(__dirname, 'dist'), // Путь, куда будет сборка
-        clean: true // Очищать папку dist перед каждой сборкой
-    },
-    module: {
-        rules: [
-            {
-                test: /\.css$/, // Регулярное выражение для CSS-файлов
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader'
-                ]
-            },
-            {
-                test: /\.js$/, // Регулярное выражение для JS-файлов
-                exclude: /node_modules/, // Исключить папку node_modules
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg|woff2|woff)$/i, // Регулярное выражение для картинок и шрифтов
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]' // Сохранять исходные имена файлов
-                        }
-                    }
-                ]
-            },
-            {
-            test: /\.html$/i,
-            loader: 'html-loader',
-          },
-        ]
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'style.css', // Имя файла, куда будет собран CSS
-        }),
-       new HtmlWebpackPlugin({
-         template: './src/index.html' // Путь к вашему HTML файлу
-       }),
-    ],
-    devServer: {
-        static: {
-          directory: path.join(__dirname, 'dist'),
-        },
-        compress: true,
-        port: 9000,
+  entry: {
+    main: './src/index.js'
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js',
+    publicPath: '',
+  },
+  mode: 'development',
+  devServer: {
+    static: path.resolve(__dirname, './dist'),
+    open: true,
+    compress: true,
+    port: 8080
+  },
+  module: {
+    rules: [{
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: '/node_modules/'
       },
-};
+      {
+        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          'postcss-loader'
+        ]
+      },
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
+
+  ]
+}
