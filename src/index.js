@@ -1,5 +1,5 @@
-import {initialCards} from './scripts/cards.js';
 import './pages/index.css';
+import {initialCards} from './scripts/cards.js';
 import { openModal, closeModal } from './scripts/modal.js';
 import { createCard, deleteCard, likeCard} from './scripts/card.js';
 
