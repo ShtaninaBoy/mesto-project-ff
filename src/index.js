@@ -31,18 +31,11 @@ editButton.addEventListener('click', () => {
   inputJobProfile.value = jobProfile.textContent;
 });
 
-function clearInputs(popup) {
-  if(popup.querySelector('.popup__form')) {
-      const form = popup.querySelector('.popup__form');
-      form.reset();
-  };
-};
-
 popups.forEach(popup => {
   popup.addEventListener('click', (event) => {
     if (event.target.classList.contains('popup__close') || event.target === event.currentTarget) {
       closeModal(popup);
-      clearInputs(popup)
+      formCreateNewCard.reset();
     }
   });
 });
@@ -73,6 +66,7 @@ function editProfile(evt) {
   nameProfile.textContent = inputNameProfileValue;
   jobProfile.textContent = inputJobProfileValue;
   closeModal(editPopup);
+  formeditProfile.reset();
 }
 
 function submitNewCardForm(evt) {
@@ -95,6 +89,7 @@ function createNewCard(newCard, handlers) {
   });
   placesList.prepend(createdCard);
   closeModal(popupNewCard);
+  formCreateNewCard.reset();
 }
 
 inputCards(initialCards, { deleteCard, likeCard, openImage });
