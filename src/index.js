@@ -9,7 +9,7 @@ const editPopup = document.querySelector('.popup_type_edit');
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const popupNewCardButton = document.querySelector('.profile__add-button');
 const popups = document.querySelectorAll('.popup');
-const formeditProfile = document.querySelector('.popup__form');
+const formEditProfile = document.querySelector('.popup__form');
 const inputNameProfile = document.querySelector('.popup__input_type_name');
 const inputJobProfile = document.querySelector('.popup__input_type_description');
 const nameProfile = document.querySelector('.profile__title');
@@ -23,6 +23,7 @@ const captionPopup = document.querySelector('.popup__caption');
 
 popupNewCardButton.addEventListener('click', () => {
   openModal(popupNewCard);
+  formCreateNewCard.reset();
 });
 
 editButton.addEventListener('click', () => {
@@ -35,7 +36,6 @@ popups.forEach(popup => {
   popup.addEventListener('click', (event) => {
     if (event.target.classList.contains('popup__close') || event.target === event.currentTarget) {
       closeModal(popup);
-      formCreateNewCard.reset();
     }
   });
 });
@@ -66,7 +66,7 @@ function editProfile(evt) {
   nameProfile.textContent = inputNameProfileValue;
   jobProfile.textContent = inputJobProfileValue;
   closeModal(editPopup);
-  formeditProfile.reset();
+  formEditProfile.reset();
 }
 
 function submitNewCardForm(evt) {
@@ -93,5 +93,5 @@ function createNewCard(newCard, handlers) {
 }
 
 inputCards(initialCards, { deleteCard, likeCard, openImage });
-formeditProfile.addEventListener('submit', editProfile);
+formEditProfile.addEventListener('submit', editProfile);
 formCreateNewCard.addEventListener('submit', submitNewCardForm);
