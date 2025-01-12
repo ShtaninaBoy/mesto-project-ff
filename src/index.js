@@ -52,24 +52,6 @@ Promise.all([getUserInfo(), getCards()])
     nameProfile.textContent = userInfo.name;
     profileDescription.textContent = userInfo.about;
     inputCards(cards, deleteCard, currentId, deleteCardApi);
-    popupNewCardButton.addEventListener('click', () => {
-      openModal(popupNewCard);
-      clearValidation(validationConfig, formCreateNewCard);
-      formCreateNewCard.reset();
-    });
-
-    profileImage.addEventListener('click', () => {
-      openModal(profileImagePopup);
-      clearValidation(validationConfig, profileImageForm);
-      profileImageForm.reset();
-    })
-
-    editButton.addEventListener('click', () => {
-      openModal(editPopup);
-      inputNameprofile.value = nameProfile.textContent;
-      inputJobProfile.value = profileDescription.textContent;
-      clearValidation(validationConfig, profileFormEdit);
-    });
 
     profileImageForm.addEventListener('submit', submitProfileImageForm);
     formCreateNewCard.addEventListener('submit', submitNewCardForm);
@@ -78,6 +60,25 @@ Promise.all([getUserInfo(), getCards()])
   })
     .catch((err) => {
       console.log(err);
+});
+
+popupNewCardButton.addEventListener('click', () => {
+  openModal(popupNewCard);
+  clearValidation(validationConfig, formCreateNewCard);
+  formCreateNewCard.reset();
+});
+
+profileImage.addEventListener('click', () => {
+  openModal(profileImagePopup);
+  clearValidation(validationConfig, profileImageForm);
+  profileImageForm.reset();
+})
+
+editButton.addEventListener('click', () => {
+  openModal(editPopup);
+  inputNameprofile.value = nameProfile.textContent;
+  inputJobProfile.value = profileDescription.textContent;
+  clearValidation(validationConfig, profileFormEdit);
 });
 
 async function submitNewCardForm(evt) {
@@ -94,7 +95,10 @@ async function submitNewCardForm(evt) {
     closeModal(popupNewCard);
   } catch (err) {
     console.log(err)
-  } finally { submitButton.textContent = initialText; };
+  } finally {
+    submitButton.textContent = initialText; 
+    submitButton.disabled = false;
+  };
 };
 
 async function submitProfileImageForm(evt) {

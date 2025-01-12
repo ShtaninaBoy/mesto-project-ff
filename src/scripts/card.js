@@ -19,11 +19,16 @@ export function createCard(item, deleteCard, likeCardApi, openImage, currentId, 
     deleteButton.classList.add(deleteButtonActive);
   }
 
-  deleteButton.addEventListener('click', () => {    
-    deleteCard(cardElement);
-    deleteCardApi(itemIdApi);
-  });
+deleteButton.addEventListener('click', () => {
 
+  deleteCardApi(itemIdApi)
+    .then(() => {
+      deleteCard(cardElement);
+    })
+    .catch((error) => {
+      console.error('Ошибка удаления карточки:', error);
+    });
+});
   const isLiked = item.likes.some((user) => user._id === currentId);
   likeButton.classList.toggle(cardLikeActive, isLiked);
 
