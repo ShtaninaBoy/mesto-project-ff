@@ -1,10 +1,10 @@
-export function openModal(mod) {
-    mod.classList.add('popup_is-opened');
+export function openModal(popup) {
+    popup.classList.add('popup_is-opened');
     document.addEventListener('keydown', handleKeydown);
 };
 
-export function closeModal(mod) {
-    mod.classList.remove('popup_is-opened');
+export function closeModal(popup) {
+    popup.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', handleKeydown);
 };
 
@@ -15,4 +15,4 @@ function handleKeydown(event) {
             closeModal(openPopupElement);
         }
     }
-}
+};
